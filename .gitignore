@@ -1,0 +1,5 @@
+# Diretórios locais/temporários que não devem ir para o Git
+.private/
+.priavate/
+.svg/
+.prompts/
