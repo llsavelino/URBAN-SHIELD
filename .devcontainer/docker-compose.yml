@@ -1,0 +1,51 @@
+version: "3.9"
+
+services:
+  app:
+    image: mcr.microsoft.com/devcontainers/javascript-node:1-20-bookworm
+    container_name: urban-shield-app
+    working_dir: /workspaces/${localWorkspaceFolderBasename}
+    command: sleep infinity
+    user: node
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      DATABASE_URL: postgres://postgres:postgres@db:5432/urban_shield
+      OLLAMA_BASE_URL: http://ollama:11434
+      OLLAMA_MODEL: llama3.2
+      GOOGLE_MAPS_API_KEY: ${GOOGLE_MAPS_API_KEY:-}
+      GOOGLE_GEOCODING_TIMEOUT_MS: 5000
+    volumes:
+      - ..:/workspaces:cached
+    depends_on:
+      - db
+      - ollama
+    ports:
+      - "3000:3000"
+      - "4200:4200"
+
+  db:
+    image: postgres:16-alpine
+    container_name: urban-shield-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: urban_shield
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: urban-shield-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+
+volumes:
+  postgres-data:
+  ollama-data:
