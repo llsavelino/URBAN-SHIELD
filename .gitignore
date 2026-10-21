@@ -1,4 +1,4 @@
 # Diretórios locais/temporários que não devem ir para o Git
-.devcontainer/
+docker/
 envs/
 svg/
