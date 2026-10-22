@@ -1,4 +1,3 @@
 # Diretórios locais/temporários que não devem ir para o Git
 docker/
 envs/
-svg/
