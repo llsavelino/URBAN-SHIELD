@@ -3,5 +3,4 @@
 .vscode/
 
 # Diretórios locais/temporários que não devem ir para o Git
-.builds/
 .global/
